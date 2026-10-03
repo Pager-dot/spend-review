@@ -100,7 +100,8 @@ def clean_merchant(narration: str) -> str:
     return " ".join(text.split())[:45].title()
 
 
-@st.cache_data(show_spinner=False)
+# Deliberately NOT cached: caching would keep parsed statement rows in server
+# memory across sessions. Re-parsing a few hundred rows is cheap.
 def load_statement(file_bytes: bytes, name: str) -> pd.DataFrame:
     engine = "xlrd" if name.lower().endswith(".xls") else None
     raw = pd.read_excel(io.BytesIO(file_bytes), header=None, engine=engine)
@@ -134,6 +135,10 @@ st.title("💸 Spend Review")
 st.caption("Upload your HDFC bank statement (.xls / .xlsx) to see where the money went.")
 
 uploaded = st.file_uploader("Bank statement", type=["xls", "xlsx"])
+st.caption(
+    "Nothing is saved. Your file is parsed in memory and discarded when you "
+    "close the tab or upload another."
+)
 
 if uploaded is None:
     st.info("Pick a statement file to get started.")

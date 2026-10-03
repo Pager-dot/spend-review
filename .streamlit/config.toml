@@ -1,0 +1,7 @@
+[browser]
+# Do not send usage statistics to Streamlit's servers.
+gatherUsageStats = false
+
+[server]
+# Uploads are held in memory only; keep the ceiling low.
+maxUploadSize = 10

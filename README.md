@@ -31,3 +31,10 @@ since those narrations carry only a name and no merchant information.
 
 No data is stored. Uploads are held in memory for the duration of the session only.
 Statement files are gitignored and should never be committed.
+
+### Privacy
+
+- Uploaded statements are parsed in memory and never written to disk.
+- Parsing is intentionally uncached, so no statement data persists in server
+  memory between sessions.
+- Streamlit usage telemetry is disabled in `.streamlit/config.toml`.
